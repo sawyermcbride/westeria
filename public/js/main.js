@@ -7,62 +7,62 @@
 // 3. functions that respond to these subscribed events
 
 
-const menuBar = (function (){
-  let elems = {};
 
-  function init() {    
-    elems.location = $('nav #location-title');
-    elems.signin = $('btn-signin');
-    elems.join = $('btn-join');
+//all the ajax calls go in her and events are fired to trigger
+//the view updates
 
-    location
+//utlity functions
 
-  }
 
-  function location (){
-  	if( navigator.geolocation ){
-  		navigator.geolocation.getCurrentPosition(success, error);
+var utils = {
+	normalizeLocation: function(pos) {
+		if(typeof pos === "object" && pos!== null &&) {
+			if(!pos.keys.length) return "94950";
+			
+			return pos.longitude + '&' + pos.latitude;				
+		}
+		 else if (typeof pos === "string" && !pos) {
+			return pos.trim().replace(/[A-Za-z]/,'');		 	
+		 } 
+	}
+}
 
-  		function success ( pos ) {
-  			localStorage.set('location', {
-  				latitude: pos.latutude,
-  				logitude: pos.longitude
-  			})
-  		}
+/**
+* Location module
+* public: 'get' takes a cb and and passes in the user location
+*/
+const location = (function () {
+	//get the location
+	const get = function (cb) {
+		if(navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(success, error);
+		}
+		function error() {
+			let l = prompt('Enter your zipcode');
 
-  		function error () {
-  			//shitty, change to custom text box
-  			var zip = prompt('We could\'t get your location, would you enter your zip code?');
-  			if(zip) {
-  				//ajax latitude/longitude from zip and set local storage
-  			} else {
-  				// default
-  			}
-  		}
-  	}
-  }
-  
-
-  function render(data) {
-  	elems.location.html(data.location);
-  }
-  return {
-  	init: init;
-  }
-})();
-
+			cb(l);
+		
+		}
+		function success() {
+			cb(pos);
+		}
+	}
+	return {
+		get: function(cb) }{
+			get(cb)
+		}
+	}
+}());
 const currentWeather = (function(){
 	let elems =  {}
 	function init () {
-		Events.subscribe('refresh', load);
+		//when new weather is updated
+		Events.subscribe('weather', _render);
 		elems.template = $('template-weather-hourly');
 		elems.canvas = $('#current-temp');
 	} 
-	function load () {
-		//AJAX Get current weather  
-	}
 	function _render (data) {
-		var template = 
+		
 	}
 	function _renderCanvas () {
 		//DRaw canvas with temperature
@@ -76,28 +76,47 @@ const dayWeather = (function() {
 	let elems = {};
 
 	function init () {
-		Events.subscribe('refresh', load);
-		elems.template = $('#template-weather-days');
+		Events.subscribe('weather', _render);
+		elems.template = $('#template-weather-days').html();
 	}
+	function buildObj (data) {
+		let json = JSON.parse(obj);
+		let o = {};
 
-	function load () {
-		//AJAX
-		_render();
+		for(let p in json) {
+			if(json.hasOwnProperty(p)) {
+				
+			}
+		}
 	}
-
 	function _render (data) {
-		//mustache template 
+		//formats the object to mustache can reder it
+		let o = buildObj(data);
 	}
 	
 	return {
 		init: init
 	}
 })();
-
+0
 
 const App = (function (){
 	var init = function() {
-      menuBar.init();
+      //when the app loads we request the inital weather object from the server and tell the modules to render
+      location.get(function(pos) {
+      	if(!pos) return false;
+      	let normalizedLocation = utils.normalizeLocation(pos);
+	      $.ajax({
+	      	method: 'GET',
+	      	url: '/w/weather?l='+normalizedLocation,
+	      	success: function(data) {
+	      		Events.publish('weather', data)
+	      	},
+	      	error: function() {
+	      		alert('could not get weather');
+	      	}
+	      });
+      });
 	}
 	return {
 		init: init
