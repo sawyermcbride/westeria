@@ -14,16 +14,25 @@
       <div class='nav-group location'>
         <h2 id='location-title'></h2>
       </div>
+      <div class = 'nav-group account'>
+        <div class='btn-group'>
+          <input type='button' value='Sign In' id='btn-signin'/>
+        </div>
+        <span> or </span>
+        <div class='btn-group'>
+          <input type='button' value='Join' id='btn-join'/>
+        </div>
+      </div>
     </nav>
     <main>
       <section class='current'>
         <section class='current-now'>
         <!-- canvas for temperature -->
-          <canvas class='current-temp'></canvas>
+          <canvas id='current-temp'></canvas>
         </section>  
         <!-- Mustache Template for current temperature -->
         <section class='current-hourly'>
-          <script id='template-weather-hourly' type='text/html'>
+          <script id='template-weather-hourly'>
             <div class='weather-hour'>
               <div class='logo'></div>
               <div class='hourly-temps'>
@@ -33,7 +42,6 @@
             </div>
           </script>
         </section>
-        <!--/-->
       </section>
       <section class='future-days'>
         
