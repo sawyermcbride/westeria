@@ -1,2 +1,2 @@
-# daylight
-Solar and Weather monitor for house
+# Westera
+Weather Application

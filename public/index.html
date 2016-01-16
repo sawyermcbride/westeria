@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link rel='stylesheet' href='./css/style.css'>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js'></script>
+  </head>
+  <body>
+    <nav class='nav'>
+      <div class = 'nav-group'>
+        <h2 class='company'>Westeria</h2>
+      </div>
+      <div class='nav-group location'>
+        <h2 id='location-title'></h2>
+      </div>
+    </nav>
+    <main>
+      <section class='current'>
+        <section class='current-now'>
+        <!-- canvas for temperature -->
+          <canvas class='current-temp'></canvas>
+        </section>  
+        <!-- Mustache Template for current temperature -->
+        <section class='current-hourly'>
+          <script id='template-weather-hourly' type='text/html'>
+            <div class='weather-hour'>
+              <div class='logo'></div>
+              <div class='hourly-temps'>
+                <h3 class='hourly-low'>{{low}}</h3>
+                <h3 class='hourly-high'>{{high}}</h3>
+              </div>
+            </div>
+          </script>
+        </section>
+        <!--/-->
+      </section>
+      <section class='future-days'>
+        
+        <!-- Template for future days -->
+        <script id='template-weather-days' type='text/html'>
+        <div class='day'>
+          <div class='date'>
+            <h4>{{date}}</h4>
+          </div>
+          <div class='icon'>
+            <span></span>
+          </div>
+          <div class='temp'>
+            <h3>{{temperature}}</h3>
+          </div>
+        </div>
+        </script>
+        <!-- / -->
+      </section>
+    </main>
+  </body>
+</html>
