@@ -1,132 +1,80 @@
 // Westeria visual weather app
 
-// All modules have
-// 1. init function which caches DOM and subscribes to events, this function is called 
-// by the app module to load the functions
-// 2. All modules have an elems object to store dom elements 
-// 3. functions that respond to these subscribed events
 
 
 
-//all the ajax calls go in her and events are fired to trigger
-//the view updates
+class dayPanel () {
+	constructor(config) {
+		this.id = config.index;
+		this.container = config.container || $('.future-days');
+		this.day = config.day;
+	}
 
-//utlity functions
-
-
-var utils = {
-	normalizeLocation: function(pos) {
-		if(typeof pos === "object" && pos!== null &&) {
-			if(!pos.keys.length) return "94950";
-			
-			return pos.longitude + '&' + pos.latitude;				
-		}
-		 else if (typeof pos === "string" && !pos) {
-			return pos.trim().replace(/[A-Za-z]/,'');		 	
-		 } 
+	render () {
+		var out = Mustache.render('<div class="panel"><h5 class="day">day</h5></div>');
 	}
 }
 
-/**
-* Location module
-* public: 'get' takes a cb and and passes in the user location
-*/
-const location = (function () {
-	//get the location
-	const get = function (cb) {
-		if(navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(success, error);
-		}
-		function error() {
-			let l = prompt('Enter your zipcode');
 
-			cb(l);
-		
-		}
-		function success() {
-			cb(pos);
-		}
-	}
-	return {
-		get: function(cb) }{
-			get(cb)
-		}
-	}
-}());
-const currentWeather = (function(){
-	let elems =  {}
-	function init () {
-		//when new weather is updated
-		Events.subscribe('weather', _render);
-		elems.template = $('template-weather-hourly');
-		elems.canvas = $('#current-temp');
-	} 
-	function _render (data) {
-		
-	}
-	function _renderCanvas () {
-		//DRaw canvas with temperature
-	}
-	return {
-		init: init
-	}
-})();
 
-const dayWeather = (function() {
-	let elems = {};
-
-	function init () {
-		Events.subscribe('weather', _render);
-		elems.template = $('#template-weather-days').html();
-	}
-	function buildObj (data) {
-		let json = JSON.parse(obj);
-		let o = {};
-
-		for(let p in json) {
-			if(json.hasOwnProperty(p)) {
+(function(w,document, undefined){
+	const utils = {
+		normalizeLocation: function(pos) {
+			if(typeof pos === "object" && pos!== null &&) {
+				if(!pos.keys.length) return "94950";
 				
+				return pos.longitude + '&' + pos.latitude;				
 			}
+			 else if (typeof pos === "string" && !pos) {
+
+				return pos.trim().replace(/[A-Za-z]/,'');		 	
+			 } 
 		}
 	}
-	function _render (data) {
-		//formats the object to mustache can reder it
-		let o = buildObj(data);
-	}
+
+	Events.subscribe('loaded', function () {
+
+		if( navigator.geolocation ) {
+			navigator.geolocation.getCurrentPosition(function(pos) {
+				$.ajax({
+					method: 'GET',
+					url: '/w?l='pos.latitude+'&'pos.longitude,
+					success: function (data) {
+						Events.publish('weather', data);
+					}
+				});
+			});
+		}
+
+	})();
+
+
+
+	Events.subscribe('weather', function (data) {
+		let hourTemplate = $('#template-weather-hourly').html();
+		let hourContainer = $('.current-hourly');
+
+		let daysTemplate = $('#template-weather-days').html();
+		let daysContainer = $('.future-days');
+
+		data.days.forEach(function(elem,index) {
+			new dayPanel({
+
+			}).render();
+		});
+
+
+	});
+
 	
-	return {
-		init: init
-	}
-})();
-0
-
-const App = (function (){
-	var init = function() {
-      //when the app loads we request the inital weather object from the server and tell the modules to render
-      location.get(function(pos) {
-      	if(!pos) return false;
-      	let normalizedLocation = utils.normalizeLocation(pos);
-	      $.ajax({
-	      	method: 'GET',
-	      	url: '/w/weather?l='+normalizedLocation,
-	      	success: function(data) {
-	      		Events.publish('weather', data)
-	      	},
-	      	error: function() {
-	      		alert('could not get weather');
-	      	}
-	      });
-      });
-	}
-	return {
-		init: init
-	}
-}();
-
-$(document).ready(App.init);
 
 
 
+
+	$(document).ready(function(){
+		Events.publish('loaded');
+	})();
+})(this, document)
 
 /**
  * Simple custom pubsub for app

@@ -33,13 +33,16 @@
         <!-- Mustache Template for current temperature -->
         <section class='current-hourly'>
           <script id='template-weather-hourly'>
-            <div class='weather-hour'>
-              <div class='logo'></div>
-              <div class='hourly-temps'>
-                <h3 class='hourly-low'>{{low}}</h3>
-                <h3 class='hourly-high'>{{high}}</h3>
+            {{#hourly}}
+              <div class='weather-hour'>
+                <h5>{{time}}</h5>
+                <div class='logo'></div>
+                <div class='hourly-temps'>
+                  <h3 class='hourly-low'>{{temperatureMin}}</h3>
+                  <h3 class='hourly-high'>{{temperatureMax}}</h3>
+                </div>
               </div>
-            </div>
+            {{/#hourly}}
           </script>
         </section>
       </section>
