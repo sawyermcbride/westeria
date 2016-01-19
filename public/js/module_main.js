@@ -1,13 +1,10 @@
 'use strict';
 
-const utils = {
-
-}
 const menu = (function() {
 	let elems = {};
 	function _cacheDom() {
 		elems.nav = $('nav');
-		elems.location = elems.nav.find('#location-title');
+		elems.location = elems.nav.find('#location');
 		elems.signIn = elems.nav.find('#btn-signin');
 		elems.signUp = elems.nav.find('#btn-join');
 	}
@@ -36,13 +33,15 @@ const currentWeather = (function () {
 
 	function _cacheDom () {
 		elems.container = $('section.current');
-		elems.currentContainer = elems.container.find('current-now');
-		elems.canvas = elems.currentContainer.find('canvas#current-temp');
+		elems.currentContainer = elems.container.find('.current-now');
+		//we can't store the canvas in a jquery object because it does not have
+		// the getContext element in the canvas node
+		elems.canvas = document.querySelector('canvas#current-temp');
 		elems.hourlyContainer = elems.container.find('.current-hourly');
 		elems.template = $('#template-weather-hourly');
 	}
 	function _bindEvents () {
-
+		//bind
 	}
 	function init () {
 		_cacheDom();
@@ -50,10 +49,11 @@ const currentWeather = (function () {
 	}
 	function renderAll (data) {
 		renderHours(data);
-
+		//render the rest of the future 
 	}
 
 	function renderHours (data) {
+		//get only the first few days
 		data.data = data.data.slice(0,4);
 
 		let template = elems.template.html();
@@ -63,31 +63,47 @@ const currentWeather = (function () {
 		elems.hourlyContainer.append(out);
 
 	}
-
-	function drawCanvas (temp) {
+	//canvas
+	function renderTemp (temp) {
 		if(typeof temp === 'object') {
 			console.error('Canvas temp must be a integer');
 			return false;
 		}
-
+		console.log(elems.canvas);
 		let ctx = elems.canvas.getContext('2d');
-		//draw
+		elems.canvas.height = 200;
+		elems.canvas.width = 400;
+		ctx.font = "20px Arial";
+		ctx.fillText(temp,100,30);
 	}
 
 	return {
 		renderAll: renderAll,
 		renderHours: renderHours,
-		init: init
+		init: init,
+		renderTemp: renderTemp
 	}
 
 })();
 
 const futureWeather = (function () {
+	let elems = {};
+
+	function cacheDom () {
+		elems.container = $('.future-days');
+		elems.template = $('#template-weather-days');
+	}
 	function renderDays (data) {
-				
+		let template = elems.template.html();
+		let out = Mustache.render(template, data);
+		elems.container.append(out);
+	}
+	function init () {
+		cacheDom();
 	}
 
 	return {
+		init: init,
 		render: renderDays
 	}
 })();
@@ -96,6 +112,7 @@ const futureWeather = (function () {
 $(document).ready(function() {
 	menu.init();
 	currentWeather.init();
+	futureWeather.init();
 
 	// navigator.geolocation.getCurrentPosition(function(pos) {
 		$.ajax({
@@ -106,6 +123,8 @@ $(document).ready(function() {
 				console.log(data);
 				menu.renderLocation(data.longitude +','+ data.latitude);
 				currentWeather.renderHours(data.hourly);
+				currentWeather.renderTemp(data.currently.temperature);
+				futureWeather.render(data.daily);
 			}
 
 		});

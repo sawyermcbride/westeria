@@ -8,14 +8,10 @@
     <script src='js/module_main.js'></script>
   </head>
   <body>
-    <nav class='nav'>
-      <div class = 'nav-group'>
-        <h2 class='company'>Westeria</h2>
-      </div>
-      <div class='nav-group location'>
-        <h2 id='location-title'></h2>
-      </div>
-      <div class = 'nav-group account'>
+    <nav>
+      <h2 class='company'>Westeria</h2>
+      <h2 id='location'></h2>
+      <div class = 'account'>
         <div class='btn-group'>
           <input type='button' value='Sign In' id='btn-signin'/>
         </div>
@@ -93,10 +89,11 @@
                 <span></span>
               </div>
               <div class='temp'>
-                <h3>{{temperatureMax}}</h3>
-                <h3>{{temperatureMin}}</h3>
+                <h3>HIGH:{{temperatureMax}}</h3>
+                <h3>LOW:{{temperatureMin}}</h3>
               </div>
             </div>
+            <hr style='border:1px solid blue'/>
           {{/data}}
         </script>
         <!-- / -->
