@@ -4,26 +4,14 @@ const express = require('express');
 
 const app = express();
 
-app.use(function(req, res, next) {
-	console.log(req.url);
-	next();
+let num = 0;
+
+app.use( (req, res, next) => {
+  console.log(req.url + '\n' + 'Connections: ' + ++num);
+  next();
 });
 
-app.get('/w', function (req, res) {
-	res.json({
-		time: '5PM',
-		temperatureMin: 99,
-		temperature: 100,
-		date: "MARCH !9Th",
-		days: [
-			{
-				day:'tuesday'
-			}
-		], 
-		temperature: "5DEG FFFFF",
-
-	});
-});
+app.use('/w', weather);
 
 
 app.use(express.static('public'));

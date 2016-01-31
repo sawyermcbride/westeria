@@ -29,24 +29,6 @@
         </section>  
         <!-- Mustache Template for current temperature -->
         <section class='current-hourly'>
-          <!-- <div>
-            <h5>5PM</h5>
-            <div>Sunny</div>
-            <span>Low: 33</span>
-            <span>High: 55</span>
-          </div>
-          <div>
-            <h5>5PM</h5>
-            <div>Sunny</div>
-            <span>Low: 33</span>
-            <span>High: 55</span>
-          </div>
-          <div>
-            <h5>5PM</h5>
-            <div>Sunny</div>
-            <span>Low: 33</span>
-            <span>High: 55</span>
-          </div> -->
           <script id='template-weather-hourly' type='text/html'>
             {{#data}}
               <div class='weather-hour'>
@@ -56,29 +38,12 @@
               </div>
             {{/data}}
           </script>
+          <!--/-->
         </section>
       </section>
       <hr/>
       <section class='future-days'>
-          <div>
-            <h5>Monsay</h5>
-            <div>Sunny</div>
-            <span>Low: 33</span>
-            <span>High: 55</span>
-          </div>
-          <div>
-            <h5>Tuesday</h5>
-            <div>Sunny</div>
-            <span>Low: 33</span>
-            <span>High: 55</span>
-          </div>
-          <div>
-            <h5>Wednesday</h5>
-            <div>Sunny</div>
-            <span>Low: 33</span>
-            <span>High: 55</span>
-          </div>
-        <!-- Template for future days -->
+        <!-- Mustache template for future days -->
         <script id='template-weather-days' type='text/html'>
           {{#data}}
             <div class='day'>
@@ -96,7 +61,7 @@
             <hr style='border:1px solid blue'/>
           {{/data}}
         </script>
-        <!-- / -->
+        <!--/-->
       </section>
     </main>
   </body>

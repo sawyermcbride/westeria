@@ -26,6 +26,10 @@ nav .btn-group>input {
 	padding:.8vh 1.75vh;
 	background:#2980b9;
 }
+nav .btn-group>input:hover {
+	cursor:pointer;
+	background:#3498db;
+}
 
 /***********************************
 Current Weather
