@@ -1,8 +1,13 @@
 // Westeria by Sawyer McBrdie
 
+'use strict';
+
+
 const express = require('express');
 
 const app = express();
+const http = require('http');
+
 
 let num = 0;
 
@@ -17,3 +22,4 @@ app.use('/w', weather);
 app.use(express.static('public'));
 
 app.listen(80, '0.0.0.0');
+
