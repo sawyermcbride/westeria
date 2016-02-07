@@ -7,7 +7,7 @@ const app = express();
 
 const weather = require('./weather');
 
-const request = require('request.js');
+const request = require('./request');
 
 let num = 0;
 
@@ -22,10 +22,16 @@ app.use('/w', weather);
 app.get('/l', (req, res) => {
   let longitude = req.query.long;
   let latitude = req.query.lat;
-  request.get('').then(function(city) {
+  
+  if(!longitude || !latitude) { 
+    res.status(400);
+    res.json({error: 'Location parameters missing!'});
+  }
+  
+  request.get('https://www.geocode.farm/v3/json/reverse/?lat=' + latitude + '&lon=' + longitude + '&country=us&lang=en').then( (data) => {
+    let info = JSON.parse(data);
     res.json({
-      city: city,
-      state: 
+      addr: info.geocoding_results.RESULTS[1].formatted_address
     });
   });  
 });

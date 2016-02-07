@@ -31,6 +31,8 @@ weather.get('/', (req, res) => {
       icon: out.currently.icon,
       temp: Math.round(out.currently.temperature),
       rain: out.currently.precipProbability,
+      cloudCover: out.currently.cloudCover,
+      wind: out.currently.cloudCover
     }
     
     //build
@@ -38,9 +40,11 @@ weather.get('/', (req, res) => {
     for (let i = 0, arr = out.hourly.data; i < 12 ; i++) {
       obj.hours.push({
         icon: arr[i].icon,
-        time: toHours(arr[i].time),
+        hour: toHours(arr[i].time),
         temp: Math.round(arr[i].temperature),
-        wind: arr[i].windSpeed
+        rain: Math.round(arr[i].precipProbability),
+        wind: arr[i].windSpeed,
+        cloudCover: arr[i].cloudCover
       })
     }
     
@@ -51,9 +55,11 @@ weather.get('/', (req, res) => {
       obj.days.push({
         icon: arr[i].icon,
         day: week[new Date(arr[i].time*1000).getDay()],
+        rain: Math.round(arr[i].precipProbability),
         tempMax: Math.round(arr[i].temperatureMax),
         tempMin: Math.round(arr[i].temperatureMin),
-        wind: arr[i].windSpeed
+        wind: arr[i].windSpeed,
+        cloudCover: arr[i].cloudCover
       })
     }
            
