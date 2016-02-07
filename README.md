@@ -8,14 +8,14 @@ This is a app built in Febuary of 2016, not really much purpose to it beyond jus
 ##### _All responses are in json_
 
 
-**GET** ```\l?long=LONGITUDE&lat=LATITUDE```: 
+**GET** ```/l?long=LONGITUDE&lat=LATITUDE```: 
 ```javascript 
 {
     addr: "San Jose, CA, USA"
 }
 ```
 
-**GET** ```\w?long=LONGITUDE&lat=LATITUDE```
+**GET** ```/w?long=LONGITUDE&lat=LATITUDE```
 ```javascript
 {
   "hours": [
