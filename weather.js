@@ -16,8 +16,18 @@ const toHours = function (t) {
   return  new Date(t*1000).getHours();
 }
 
+
+
+
 weather.get('/', (req, res) => {
-    request.get('https://api.forecast.io/forecast/4f0d96d34194def53f1c30a785b314fd/37.8267,-122.423').then( (data) => {
+  //TODO add config file for api key
+    
+  if (!req.query.lat || !req.query.long) {
+    res.status(400);
+    res.json({error: 'Missing location parameters!'});
+  }
+  
+    request.get('https://api.forecast.io/forecast/4f0d96d34194def53f1c30a785b314fd/' + req.query.lat + ',' + req.query.long).then( (data) => {
       
     let out = JSON.parse(data);
       
@@ -26,6 +36,8 @@ weather.get('/', (req, res) => {
     obj.days = [];
     
     console.log(out.currently)
+    
+    //build
       
     obj.current = {
       icon: out.currently.icon,
@@ -35,7 +47,6 @@ weather.get('/', (req, res) => {
       wind: out.currently.cloudCover
     }
     
-    //build
     
     for (let i = 0, arr = out.hourly.data; i < 12 ; i++) {
       obj.hours.push({

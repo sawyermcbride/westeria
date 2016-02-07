@@ -16,6 +16,7 @@ app.use( (req, res, next) => {
   next();
 });
 
+
 app.use('/w', weather);
 
 
@@ -27,7 +28,7 @@ app.get('/l', (req, res) => {
     res.status(400);
     res.json({error: 'Location parameters missing!'});
   }
-  
+  console.log('in');
   request.get('https://www.geocode.farm/v3/json/reverse/?lat=' + latitude + '&lon=' + longitude + '&country=us&lang=en').then( (data) => {
     let info = JSON.parse(data);
     res.json({
