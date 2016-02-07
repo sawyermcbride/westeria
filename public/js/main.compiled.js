@@ -29,11 +29,11 @@ var menu = function () {
 
 var metaInfo = function () {
 	var getLocation = new Promise(function (resolve, reject) {
-		if (!navigator.getloocation) reject("Location is not available, try entering your zip code manually");
-		navigator.getLocation.getCurrentPosition(function (pos) {
+		//    if(!navigator.geolocation) reject("Location is not available, try entering your zip code manually");
+		navigator.geolocation.getCurrentPosition(function (pos) {
 			resolve(pos.coords.latitude, pos.coords.longitude);
 		}, function (error) {
-			reject(error);
+			resolve('Corte madera, sa');
 		});
 	});
 	return {
@@ -124,22 +124,19 @@ $(document).ready(function () {
 	currentWeather.init();
 	futureWeather.init();
 
-	metaInfo.getLocation().then(function (lat, long) {
-		$.ajax({
-			url: 'https://api.forecast.io/forecast/311b8f1ba7fb57a38aaf771086360d88/' + lat + ',' + long,
-			jsonp: 'callback',
-			dataType: 'jsonp',
+	metaInfo.getLocation.then(function (lat, long) {
+		$.get({
+			url: '/w',
+			dataType: 'json',
 			success: function success(data) {
 				console.log(data);
-				menu.renderLocation(data.longitude + ',' + data.latitude);
+				menu.renderLocation(lat + ',' + long);
 				currentWeather.renderHours(data.hourly);
 				currentWeather.renderTemp(data.currently.temperature);
 				futureWeather.render(data.daily);
 			}
 
 		});
-	}, function (err) {
-		alert('couldn\'t get locaiton');
 	});
 	// navigator.geolocation.getCurrentPosition(function(pos) {
 });

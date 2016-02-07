@@ -1,13 +1,13 @@
 // Westeria by Sawyer McBrdie
 
 'use strict';
-
-
 const express = require('express');
 
 const app = express();
-const http = require('http');
 
+const weather = require('./weather');
+
+const request = require('request.js');
 
 let num = 0;
 
@@ -17,6 +17,18 @@ app.use( (req, res, next) => {
 });
 
 app.use('/w', weather);
+
+
+app.get('/l', (req, res) => {
+  let longitude = req.query.long;
+  let latitude = req.query.lat;
+  request.get('').then(function(city) {
+    res.json({
+      city: city,
+      state: 
+    });
+  });  
+});
 
 
 app.use(express.static('public'));
