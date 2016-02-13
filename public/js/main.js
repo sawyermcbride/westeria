@@ -34,74 +34,77 @@ const metaInfo = (function() {
       resolve(pos.coords.latitude, pos.coords.longitude);
     },(error) => {
       resolve('Corte madera, sa');
-    }); 
+    });
   });
   return {
     getLocation
   }
 })();
+const loading = (function(){
+  const loadingHtml = $('#loading').html();
 
+
+})();
 const currentWeather = (function () {
-	let elems = {};
+let elems = {};
+  function _cacheDom () {
+      elems.container = $('section.current');
+      elems.currentContainer = elems.container.find('.current-now');
+      //we can't store the canvas in a jquery object because it does not have
+      // the getContext element in the canvas node
+      elems.canvas = document.querySelector('canvas#current-temp');
+      elems.hourlyContainer = elems.container.find('.current-hourly');
+      elems.template = $('#template-weather-hourly');
+  }
+  function _bindEvents () {
+      //bind
+  }
+  function init () {
+      _cacheDom();
+      _bindEvents();
+  }
+  function renderAll (data) {
+      renderHours(data);
+      //render the rest of the future
+  }
 
-	function _cacheDom () {
-		elems.container = $('section.current');
-		elems.currentContainer = elems.container.find('.current-now');
-		//we can't store the canvas in a jquery object because it does not have
-		// the getContext element in the canvas node
-		elems.canvas = document.querySelector('canvas#current-temp');
-		elems.hourlyContainer = elems.container.find('.current-hourly');
-		elems.template = $('#template-weather-hourly');
-	}
-	function _bindEvents () {
-		//bind
-	}
-	function init () {
-		_cacheDom();
-		_bindEvents();
-	}
-	function renderAll (data) {
-		renderHours(data);
-		//render the rest of the future 
-	}
+  function renderHours (data) {
+      //get only the first few days
+      data.data = data.data.slice(0,4);
 
-	function renderHours (data) {
-		//get only the first few days
-		data.data = data.data.slice(0,4);
+      let template = elems.template.html();
+      console.log(template)
+      let out = Mustache.render(template, data);
+      //append the rendered html from mustache
+      elems.hourlyContainer.append(out);
 
-		let template = elems.template.html();
-		console.log(template)
-		let out = Mustache.render(template, data);
-		//append the rendered html from mustache
-		elems.hourlyContainer.append(out);
+  }
+  //canvas
+  function renderTemp (temp) {
+      if(typeof temp === 'object') {
+          console.error('Canvas temp must be a integer');
+          return false;
+      }
+      console.log(elems.canvas);
+      let ctx = elems.canvas.getContext('2d');
+      elems.canvas.height = 200;
+      elems.canvas.width = 400;
+      ctx.font = "20px Arial";
+      ctx.fillText(temp,100,30);
+  }
 
-	}
-	//canvas
-	function renderTemp (temp) {
-		if(typeof temp === 'object') {
-			console.error('Canvas temp must be a integer');
-			return false;
-		}
-		console.log(elems.canvas);
-		let ctx = elems.canvas.getContext('2d');
-		elems.canvas.height = 200;
-		elems.canvas.width = 400;
-		ctx.font = "20px Arial";
-		ctx.fillText(temp,100,30);
-	}
-
-	return {
-		renderAll,
-		renderHours,
-		init,
-		renderTemp
-	}
+  return {
+      renderAll,
+      renderHours,
+      init,
+      renderTemp
+  }
 
 })();
 
 const futureWeather = (function () {
 	let elems = {};
-	
+
     function cacheDom () {
 		elems.container = $('.future-days');
 		elems.template = $('#template-weather-days');
@@ -126,7 +129,7 @@ $(document).ready(function() {
 	menu.init();
 	currentWeather.init();
 	futureWeather.init();
-    
+
     metaInfo.getLocation.then((lat, long) => {
 		$.get({
 			url: '/w',

@@ -1,6 +1,7 @@
 // Westeria by Sawyer McBrdie
 
 'use strict';
+
 const express = require('express');
 
 const app = express();
@@ -19,12 +20,11 @@ app.use( (req, res, next) => {
 
 app.use('/w', weather);
 
-
 app.get('/l', (req, res) => {
   let longitude = req.query.long;
   let latitude = req.query.lat;
-  
-  if(!longitude || !latitude) { 
+
+  if(!longitude || !latitude) {
     res.status(400);
     res.json({error: 'Location parameters missing!'});
   }
@@ -34,11 +34,10 @@ app.get('/l', (req, res) => {
     res.json({
       addr: info.geocoding_results.RESULTS[1].formatted_address
     });
-  });  
+  });
 });
 
 
 app.use(express.static('public'));
 
 app.listen(80, '0.0.0.0');
-

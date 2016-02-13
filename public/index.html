@@ -3,29 +3,26 @@
   <head>
     <title></title>
     <link rel='stylesheet' href='./css/style.css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js'></script>
     <script src='js/main.compiled.js'></script>
   </head>
   <body>
     <nav>
-      <h2 class='company'>Westeria</h2>
-      <h2 id='location'></h2>
-      <div class = 'account'>
-        <div class='btn-group'>
-          <input type='button' value='Sign In' id='btn-signin'/>
+      <div class='flex-container'>
+        <div class='company-container'>
+          <h2 class='company'>Westeria</h2>
+          <h6 class='sub-link'>.co</h6>
         </div>
-        <span> or </span>
-        <div class='btn-group'>
-          <input type='button' value='Join' id='btn-join'/>
-        </div>
+        <h2 id='location'>Corte Madera, CA, USA</h2>
       </div>
     </nav>
     <main>
       <section class='current'>
         <section class='current-now'>
         <!-- canvas for temperature -->
-          <canvas id='current-temp'></canvas>
+          <!-- <canvas id='current-temp'></canvas> -->
         </section>  
         <!-- Mustache Template for current temperature -->
         <section class='current-hourly'>
@@ -41,7 +38,6 @@
           <!--/-->
         </section>
       </section>
-      <hr/>
       <section class='future-days'>
         <!-- Mustache template for future days -->
         <script id='template-weather-days' type='text/html'>
@@ -54,7 +50,7 @@
                 <span></span>
               </div>
               <div class='temp'>
-                <h3>HIGH:{{temperatureMax}}</h3>
+                <h3>:{{temperatureMax}}</h3>
                 <h3>LOW:{{temperatureMin}}</h3>
               </div>
             </div>
