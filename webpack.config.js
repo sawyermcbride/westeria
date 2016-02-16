@@ -1,23 +1,29 @@
-
-'use strict';
+const path = require('path');
 const webpack = require('webpack');
-let debug =  process.env.NODE_ENV !== 'production';
-
-
 module.exports = {
-  context: __dirname,
-  entry: ['./public/js/main.js'],
-  output: {
-    path: __dirname + '/public/js',
-    filename: 'main.compiled.js'
-  },
-  loaders: [
-    {
-      test: './public/js',
-      loader: 'babel-loader',
-      query: {
-        presets: ['react', 'es2015'],
-      }
-    }
-  ]
+	context: __dirname,
+	entry: './public/js/main.jsx',
+	output: {
+		path: 'public/',
+		filename: 'main.compiled.js'
+	},
+	module: {
+		loaders: [
+			{
+				test: /\.jsx?$/,
+				loader: 'babel-loader',
+				query: {
+					presets:['es2015', 'react']
+				}
+			}
+		]
+	},
+	plugins: [
+		new webpack.optimize.UglifyJsPlugin({
+			compress: {
+				warnings: false
+			}
+		}),
+		new webpack.NoErrorsPlugin()
+	]
 }

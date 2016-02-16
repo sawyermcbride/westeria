@@ -3,62 +3,13 @@
   <head>
     <title></title>
     <link rel='stylesheet' href='./css/style.css'>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js'></script>
-    <script src='js/main.compiled.js'></script>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' type='text/css' rel='stylesheet'>
   </head>
   <body>
-    <nav>
-      <div class='flex-container'>
-        <div class='company-container'>
-          <h2 class='company'>Westeria</h2>
-          <h6 class='sub-link'>.co</h6>
-        </div>
-        <h2 id='location'>Corte Madera, CA, USA</h2>
-      </div>
-    </nav>
-    <main>
-      <section class='current'>
-        <section class='current-now'>
-        <!-- canvas for temperature -->
-          <!-- <canvas id='current-temp'></canvas> -->
-        </section>  
-        <!-- Mustache Template for current temperature -->
-        <section class='current-hourly'>
-          <script id='template-weather-hourly' type='text/html'>
-            {{#data}}
-              <div class='weather-hour'>
-                <h5>{{time}}</h5>
-                <div class='logo'></div>
-                <h4 class'temp'>Temp: {{apparentTemperature}}</h4>
-              </div>
-            {{/data}}
-          </script>
-          <!--/-->
-        </section>
-      </section>
-      <section class='future-days'>
-        <!-- Mustache template for future days -->
-        <script id='template-weather-days' type='text/html'>
-          {{#data}}
-            <div class='day'>
-              <div class='date'>
-                <h4>day from server</h4>
-              </div>
-              <div class='icon'>
-                <span></span>
-              </div>
-              <div class='temp'>
-                <h3>:{{temperatureMax}}</h3>
-                <h3>LOW:{{temperatureMin}}</h3>
-              </div>
-            </div>
-            <hr style='border:1px solid blue'/>
-          {{/data}}
-        </script>
-        <!--/-->
-      </section>
-    </main>
+    <div id='app'>
+
+
+    </div>
+    <script src='main.compiled.js'></script>
   </body>
 </html>

@@ -21,24 +21,24 @@ const toHours = function (t) {
 
 weather.get('/', (req, res) => {
   //TODO add config file for api key
-    
+
   if (!req.query.lat || !req.query.long) {
     res.status(400);
     res.json({error: 'Missing location parameters!'});
   }
-  
+
     request.get('https://api.forecast.io/forecast/4f0d96d34194def53f1c30a785b314fd/' + req.query.lat + ',' + req.query.long).then( (data) => {
-      
+
     let out = JSON.parse(data);
-      
-      
+
+
     obj.hours = [];
     obj.days = [];
-    
+
     console.log(out.currently)
-    
+
     //build
-      
+
     obj.current = {
       icon: out.currently.icon,
       temp: Math.round(out.currently.temperature),
@@ -46,8 +46,8 @@ weather.get('/', (req, res) => {
       cloudCover: out.currently.cloudCover,
       wind: out.currently.cloudCover
     }
-    
-    
+
+
     for (let i = 0, arr = out.hourly.data; i < 12 ; i++) {
       obj.hours.push({
         icon: arr[i].icon,
@@ -58,10 +58,10 @@ weather.get('/', (req, res) => {
         cloudCover: arr[i].cloudCover
       })
     }
-    
-      
-      
-      
+
+
+
+
     for (let i = 0, arr = out.daily.data, len = arr.length; i < len ; i++) {
       obj.days.push({
         icon: arr[i].icon,
@@ -73,10 +73,10 @@ weather.get('/', (req, res) => {
         cloudCover: arr[i].cloudCover
       })
     }
-           
+
     res.json(obj);
-    
-    
+
+
   });
 });
 
