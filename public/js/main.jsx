@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Top from './components/Top.jsx';
-import ajax from './ajax.js';
-import Current from './components/Current.jsx';
-import Weather from './components/Weather.jsx';
+import Top from './components/Top';
+import ajax from './ajax';
+import Current from './components/Current';
+import Weather from './components/Weather';
 const App = React.createClass({
 	getInitialState: function() {
 		return {
@@ -36,7 +36,7 @@ const App = React.createClass({
 			});
 
 		}).catch( (err) => {
-				alert(err);
+			alert(err);	
 		});
 	},
 	render: function() {

@@ -7,6 +7,10 @@ module.exports = {
 		path: 'public/',
 		filename: 'main.compiled.js'
 	},
+	resolve: {
+		moduleDirectorys: ['node_modules', 'src'],
+		extensions: ['','.js','.jsx']
+	}
 	module: {
 		loaders: [
 			{
