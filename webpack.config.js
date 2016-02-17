@@ -2,15 +2,15 @@ const path = require('path');
 const webpack = require('webpack');
 module.exports = {
 	context: __dirname,
-	entry: './public/js/main.jsx',
+	entry: './src/js/main.jsx',
 	output: {
-		path: 'public/',
+		path: 'dist/',
 		filename: 'main.compiled.js'
 	},
 	resolve: {
 		moduleDirectorys: ['node_modules', 'src'],
 		extensions: ['','.js','.jsx']
-	}
+	},
 	module: {
 		loaders: [
 			{
