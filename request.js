@@ -16,7 +16,7 @@ module.exports.get = function (url) {
       res.on('data', (chunk) => {
         out+=chunk.toString();
       });
-      res.on('end', () => {}
+      res.on('end', () => {
         resolve(out);
 
       });

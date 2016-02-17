@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link rel="stylesheet" href="weather-icons.min.css" >
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+    <style>
+    body, html {
+      font-size: 14px;
+      line-height: 1.428;
+      font-family: 'Open Sans', sans-serif;
+      }
+    h1,h2,h3,h4,h5,h6{
+      margin: 5px 5px;
+    }
+    h6 {
+      font-size: 12px;
+    }
+    h5 {
+      font-size: 14px;
+    }
+      .midnight {
+        color: #34495e;
+      }
+
+
+      .container {
+        margin: 2% 4%
+      }
+      body {
+        width: 100%;
+        height: 100vh;
+        margin: 0;
+      }
+
+
+/****************LOADER*******************/
+      .loader {
+        position: absolute;
+        top: 25%;
+        left:50%;
+        -webkit-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+        width: 50px;
+        height: 50px;
+        background-color: #34495e;
+        border-radius: 50%;
+      }
+      .loader:after {
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        border: 0px solid white;
+        -webkit-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+        -webkit-animation: loading 1000ms ease-out forwards infinite;
+                animation: loading 1000ms ease-out forwards infinite;
+      }
+
+      @-webkit-keyframes loading {
+        0% {
+          border: 0px solid white;
+        }
+        20% {
+          border: 8px solid white;
+          width: 0%;
+          height: 0%;
+        }
+        100% {
+          border: 8px solid white;
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      @keyframes loading {
+        0% {
+          border: 0px solid white;
+        }
+        20% {
+          border: 8px solid white;
+          width: 0%;
+          height: 0%;
+        }
+        100% {
+          border: 8px solid white;
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+/************************************/
+      header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      header > .midnight {
+        font-size:12px;
+      }
+      .top-line {
+        border: 1px solid #34495e;
+        margin: 0 12%;
+      }
+      .temp {
+        color:white;
+        font-size: 20px;
+      }
+      .current-container {
+        text-align: center;
+      }
+      .current {
+        margin-top: 5px;
+        width: 80%;
+        height: 80px;
+        display: inline-block;
+        text-align: center;
+        background:#DADFE1;
+        border-radius: 8px;
+      }
+      .current > * {
+        display: inline-block;
+      }
+      .current-logo {
+          font-size: 20px;
+      }
+      /*********************************/
+      .hour-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content:space-around;
+        margin-top: 10px;
+        background: #34495e;
+        border-radius: 8px;
+        text-align: center;
+      }
+      .hour-container > .hour-node {
+        display:inline-block;
+        border-radius: 5px;
+        margin: 5px 8px;
+      }
+      .hour-node > .hour-temp {
+        color:white;
+        text-align: center;
+        margin-bottom: 1px;
+        margin-top: 1px;
+        font-size: 10px;
+        width:10px;
+      }
+      .hour-time {
+        font-size: 8px;
+        margin: 5px 0px;
+        color:white
+      }
+      .hour-icon {
+        margin-left: 2px;
+        color:white;
+      }
+      .title, .title {
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 2px;
+      }
+      /***********************************/
+      .daily-container {
+        display:flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      .day-node {
+        width:48%;
+        min-width: 50px;
+        margin: 3px 1%;
+        background: #34495e;
+        border-radius: 5px;
+      }
+      .day-node:first-child {
+        width:100%;
+      }
+      .daily-container .day-node div:nth-child(2){
+        text-align: center;
+        color:white;
+        font-size: 15px;
+      }
+      .day {
+        text-align: center;
+        color:white;
+      }
+      .temp-container {
+        text-align: center;
+      }
+      .temp-container>* {
+        display:inline-block;
+        color:white;
+      }
+
+      footer {
+        margin: 0 auto;
+        margin-top: 55px;
+        text-align: center;
+      }
+
+
+    </style>
+  </head>
+    <body>
+      <div id='app' class='container'>
+
+      </div>
+      <footer>Westeria By Sawyer McBride: <a href='https://github.com/sawyermcbride/westeria/tree/westeria_react'>source</a></footer>
+
+    </body>
+  <script src='main.compiled.js'></script>
+</html>

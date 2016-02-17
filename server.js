@@ -38,6 +38,6 @@ app.get('/l', (req, res) => {
 });
 
 
-app.use(express.static('public'));
+app.use(express.static('dist'));
 
 app.listen(80, '0.0.0.0');
