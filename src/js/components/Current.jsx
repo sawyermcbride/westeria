@@ -1,18 +1,14 @@
 import React from 'react';
+import {table} from '../utils';
 
 const Current = React.createClass({
-    render: function() {
-      //TODO COMPUTATE LOGO
-      console.log(this.props);
+
+  render: function() {
     return (
       <section className='current-container'>
-        <div className='current'>
-          <div>
-            <h6 className='temp' onClick = {this.props.toggleFormat}>
-              {this.props.currentWeather.temp + this.props.format}
-             </h6>
-            <i className='wi wi-day-sunny current-logo'></i>
-          </div>
+        <div className = 'current-display'>
+          <h4 onClick = {this.props.toggleFormat}> {this.props.weather.temp + this.props.format} </h4>
+          <i className={table[this.props.weather.icon]}></i>
         </div>
       </section>
     )

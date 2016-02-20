@@ -31,6 +31,13 @@ app.get('/l', (req, res) => {
   console.log('in');
   request.get('https://www.geocode.farm/v3/json/reverse/?lat=' + latitude + '&lon=' + longitude + '&country=us&lang=en').then( (data) => {
     let info = JSON.parse(data);
+    if ( info.geocoding_results.RESULTS[1].formatted_address.length > 24) {
+      console.log("BIG AGGRESS ************************************************\n**********\n");
+      console.log(info.geocoding_results.RESULTS[1].formatted_address.length > 24 + '\n');
+      console.log(req.url +  '\n');
+      console.log('*****************************************************\n********');
+
+    }
     res.json({
       addr: info.geocoding_results.RESULTS[1].formatted_address
     });

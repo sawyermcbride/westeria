@@ -35,7 +35,6 @@ weather.get('/', (req, res) => {
     obj.hours = [];
     obj.days = [];
 
-    console.log(out.currently)
 
     //build
 
