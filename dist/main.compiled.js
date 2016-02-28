@@ -66,7 +66,7 @@
 
 	var _MainWeather2 = _interopRequireDefault(_MainWeather);
 
-	var _SwitchTab = __webpack_require__(164);
+	var _SwitchTab = __webpack_require__(166);
 
 	var _SwitchTab2 = _interopRequireDefault(_SwitchTab);
 
@@ -83,8 +83,14 @@
 				fahrenheit: true,
 				hours: [],
 				days: [],
-				tab: 1
+				tab: 2
 			};
+		},
+		addLocation: function addLocation(place) {
+			alert('place added');
+		},
+		changeMainLocation: function changeMainLocation(place) {
+			alert('location default changed');
 		},
 		getCoords: function getCoords() {
 			var _this = this;
@@ -140,7 +146,7 @@
 
 			this.getCoords().then(function () {
 				/**
-	    * ALl the below code does is descide if the information exists in the localstorage
+	    * ALl the below code does is decide if the information exists in the localstorage
 	    * of the browser already. If the time has expired ( 3 min refresh) or its the first time
 	    * then we make an ajax request for the info and store it in the local storage for future
 	    * use. 
@@ -179,7 +185,13 @@
 			});
 		},
 		componentDidMount: function componentDidMount() {
+			var _this4 = this;
+
 			this.updateInfo();
+			this.setState({ windowWidth: window.innerWidth > 0 ? window.innerWidth : screen.width });
+			window.addEventListener('resize', function () {
+				_this4.setState({ windowWidth: window.innerWidth > 0 ? window.innerWidth : screen.width });
+			});
 		},
 		switchTab: function switchTab(num) {
 			if (num > 3) throw new Error('Tab Does Not Exist');
@@ -188,7 +200,7 @@
 			this.setState({ tab: parseInt(num) });
 		},
 		render: function render() {
-			var _this4 = this;
+			var _this5 = this;
 
 			var content = undefined;
 			var degree = String.fromCharCode(176);
@@ -199,20 +211,23 @@
 			return _react2.default.createElement(
 				'div',
 				{ className: 'container' },
-				_react2.default.createElement(_Top2.default, { location: this.state.location }),
+				_react2.default.createElement(_Top2.default, { addLocation: this.addLocation,
+					changeMainLocation: this.changeMainLocation,
+					location: this.state.location
+				}),
 				_react2.default.createElement(_SwitchTab2.default, { triggerSwitchTab: this.switchTab, tab: this.state.tab }),
 				function () {
-					console.log(_this4.state.current);
-					if (!(_this4.state.days.length && _this4.state.hours.length)) {
+					if (!(_this5.state.days.length && _this5.state.hours.length)) {
 						return _react2.default.createElement('div', { className: 'loader' });
 					} else {
 						return _react2.default.createElement(_MainWeather2.default, {
-							toggleFormat: _this4.toggleFormat,
-							format: degree + (_this4.state.fahrenheit ? 'F' : 'C'),
-							current: _this4.state.current,
-							hours: _this4.state.hours,
-							days: _this4.state.days,
-							tab: _this4.state.tab
+							windowWidth: _this5.state.windowWidth,
+							toggleFormat: _this5.toggleFormat,
+							format: degree + (_this5.state.fahrenheit ? 'F' : 'C'),
+							current: _this5.state.current,
+							hours: _this5.state.hours,
+							days: _this5.state.days,
+							tab: _this5.state.tab
 						});
 					}
 				}()
@@ -19895,7 +19910,17 @@
 	var Header = _react2.default.createClass({
 		displayName: 'Header',
 
+		getInitialState: function getInitialState() {
+			return {
+				menuOpen: false
+			};
+		},
+		toggleMenu: function toggleMenu() {
+			this.setState({ menuOpen: !this.state.menuOpen });
+		},
 		render: function render() {
+			var _this = this;
+
 			return _react2.default.createElement(
 				'div',
 				null,
@@ -19909,13 +19934,23 @@
 					),
 					_react2.default.createElement(
 						'h5',
-						{ className: 'midnight location' },
+						{ onClick: this.toggleMenu, className: 'midnight location' },
 						' ',
 						this.props.location || _react2.default.createElement(
 							'div',
 							null,
 							'loading'
-						)
+						),
+						function () {
+							if (_this.state.menuOpen) {
+								return _react2.default.createElement(
+									'div',
+									{ className: 'location-dropdown' },
+									'open menu'
+								);
+							}
+							return '';
+						}()
 					)
 				),
 				_react2.default.createElement('hr', { className: 'top-line' })
@@ -19986,6 +20021,10 @@
 
 	var _Current2 = _interopRequireDefault(_Current);
 
+	var _Forecast = __webpack_require__(164);
+
+	var _Forecast2 = _interopRequireDefault(_Forecast);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var MainWeather = _react2.default.createClass({
@@ -20008,11 +20047,12 @@
 	            });
 	            break;
 	          case 2:
-	            return _react2.default.createElement(
-	              'h1',
-	              null,
-	              ' FORECAST '
-	            );
+	            return _react2.default.createElement(_Forecast2.default, {
+	              windowWidth: _this.props.windowWidth,
+	              hours: _this.props.hours,
+	              days: _this.props.days,
+	              format: _this.props.format
+	            });
 	            break;
 	          case 3:
 	            return _react2.default.createElement(
@@ -20099,6 +20139,195 @@
 
 /***/ },
 /* 164 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _utils = __webpack_require__(163);
+
+	var _HourTab = __webpack_require__(165);
+
+	var _HourTab2 = _interopRequireDefault(_HourTab);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Forecast = _react2.default.createClass({
+	  displayName: 'Forecast',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      hourTab: '0'
+	    };
+	  },
+	  convertTime: function convertTime(time) {
+	    if (time === 0) return '12 AM';else if (time >= 12) return time - 12 + ' PM';else return time + ' AM';
+	  },
+
+	  switchHourTab: function switchHourTab(e) {
+	    var tab = e.target.dataset.tab;
+	    this.setState({ hourTab: tab });
+	  },
+	  render: function render() {
+	    var _this = this;
+
+	    var self = this;
+	    var hourSections = [];
+	    for (var i = 0; i < 2; i++) {
+	      var section = [];
+
+	      console.log(this.props.windowWidth);
+	      if (this.props.windowWidth < 700) {
+	        var index1 = i && 6; //use the i val if 0 (false) otherwise use 6
+	        var index2 = i === 0 ? 6 : 13;
+	        section = this.props.hours.slice(index1, index2);
+	      } else {
+	        var index1 = i && 9; //these variables would not work without block scoping
+	        var index2 = i === 0 ? 9 : 18;
+	        section = this.props.hours.slice(index1, index2);
+	      }
+
+	      hourSections[i] = section.map(function (elem, index) {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'hour-node ' + (index % 2 === 0 ? ' empty-background' : ''), key: index },
+	          _react2.default.createElement(
+	            'h3',
+	            null,
+	            _this.convertTime(elem.hour)
+	          ),
+	          _react2.default.createElement(
+	            'h4',
+	            null,
+	            elem.temp + _this.props.format
+	          ),
+	          _react2.default.createElement('i', { className: _utils.table[elem.icon] }),
+	          _react2.default.createElement(
+	            'h5',
+	            null,
+	            Math.round(elem.cloudCover * 10) + '% Cloud Cover'
+	          )
+	        );
+	      });
+	    }
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'h6',
+	        null,
+	        'Hourly'
+	      ),
+	      _react2.default.createElement(_HourTab2.default, { switchHourTab: this.switchHourTab, tab: this.state.hourTab }),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'hours-container' },
+	        hourSections[parseInt(this.state.hourTab)]
+	      )
+	    );
+	  }
+	});
+	var Days = _react2.default.createClass({
+	  displayName: 'Days',
+
+
+	  render: function render() {
+	    var _this2 = this;
+
+	    var days = this.props.days.map(function (elem, index) {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'day-node' },
+	        _react2.default.createElement(
+	          'h4',
+	          null,
+	          elem.day
+	        ),
+	        _react2.default.createElement('i', { className: _utils.table[elem.icon] }),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'temp-container' },
+	          _react2.default.createElement(
+	            'h4',
+	            { className: 'temp-high' },
+	            elem.tempMax + _this2.props.format
+	          ),
+	          _react2.default.createElement(
+	            'h4',
+	            { className: 'temp-low' },
+	            elem.tempMin + _this2.props.format
+	          )
+	        )
+	      );
+	    });
+
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'days-container' },
+	      days
+	    );
+	  }
+	});
+	exports.default = Forecast;
+
+/***/ },
+/* 165 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var HourTab = _react2.default.createClass({
+	    displayName: 'HourTab',
+
+	    getInitialState: function getInitialState() {
+	        return {
+	            tabNames: []
+	        };
+	    },
+	    componentWillMount: function componentWillMount() {
+	        this.setState({ tabNames: this.props.tabNames });
+	        var hour = new Date().getHours();
+
+	        var diff = 24 - hour;
+	        if (diff > 18) {
+	            this.setState({ tabNames: ['Morning', 'Afternoon'] });
+	        } else if (diff >= 10) {
+	            this.setState({ tabNames: ['Today', 'Tonight'] });
+	        } else if (diff >= 8) {
+	            this.setState({ tabNames: ['Tonight', 'Early Tommorrow'] });
+	        }
+	    },
+	    render: function render() {
+	        return _react2.default.createElement(
+	            'div',
+	            { className: 'hour-tab-container' },
+	            _react2.default.createElement('input', { type: 'button', 'data-tab': '0', onClick: this.props.switchHourTab, className: this.props.tab === '0' ? 'hour-tab-selected' : '', value: this.state.tabNames[0] }),
+	            _react2.default.createElement('input', { type: 'button', 'data-tab': '1', onClick: this.props.switchHourTab, className: this.props.tab === '1' ? 'hour-tab-selected' : '', value: this.state.tabNames[1] })
+	        );
+	    }
+	});
+
+	exports.default = HourTab;
+
+/***/ },
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

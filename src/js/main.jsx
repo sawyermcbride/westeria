@@ -14,9 +14,15 @@ const App = React.createClass({
 			fahrenheit:true,
 			hours: [],
 			days: [],
-      tab: 1
+      tab: 2
 		}
 	},
+  addLocation: function(place) {
+    alert('place added');
+  },
+  changeMainLocation: function(place) {
+    alert('location default changed');
+  },
 	getCoords: function() {
 
 		return new Promise( (resolve, reject) => {
@@ -68,7 +74,7 @@ const App = React.createClass({
 
 		this.getCoords().then( () => {
       /**
-       * ALl the below code does is descide if the information exists in the localstorage
+       * ALl the below code does is decide if the information exists in the localstorage
        * of the browser already. If the time has expired ( 3 min refresh) or its the first time
        * then we make an ajax request for the info and store it in the local storage for future
        * use. 
@@ -101,6 +107,10 @@ const App = React.createClass({
 	},
 	componentDidMount: function() {
 		this.updateInfo();
+    this.setState({windowWidth: (window.innerWidth > 0 ? window.innerWidth : screen.width)});
+    window.addEventListener('resize', () => {
+      this.setState({windowWidth: (window.innerWidth > 0 ? window.innerWidth : screen.width) });
+    });
 	},
   switchTab: function(num) {
     if (num > 3) throw new Error('Tab Does Not Exist');
@@ -118,17 +128,20 @@ const App = React.createClass({
      */
 		return (
 			<div className='container'>
-				<Top location = {this.state.location}/>
+				<Top addLocation = {this.addLocation}
+             changeMainLocation = {this.changeMainLocation}
+             location = {this.state.location}
+         />
         <SwitchTab  triggerSwitchTab = {this.switchTab} tab={this.state.tab} />
         {/*IIFE: returns component depending on tab and loading status*/}
 
         {
           (()=> {
-            console.log(this.state.current);
             if (!(this.state.days.length && this.state.hours.length)) {
               return <div className='loader'></div>
             } else {
-              return <MainWeather 
+              return <MainWeather
+                    windowWidth = {this.state.windowWidth}
                     toggleFormat = {this.toggleFormat}
                     format = {degree + (this.state.fahrenheit ? 'F':'C')}
                     current={this.state.current}

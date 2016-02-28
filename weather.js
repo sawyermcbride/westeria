@@ -47,7 +47,7 @@ weather.get('/', (req, res) => {
     }
 
 
-    for (let i = 0, arr = out.hourly.data; i < 12 ; i++) {
+    for (let i = 0, arr = out.hourly.data; i < arr.length ; i++) {
       obj.hours.push({
         icon: arr[i].icon,
         hour: toHours(arr[i].time),
