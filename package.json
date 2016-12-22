@@ -1,7 +1,7 @@
 {
   "name": "westeria",
   "version": "1.0.0",
-  "description": "Weather App",
+  "description": "React Weather App",
   "dependencies": {
     "babel-preset-react": "^6.5.0",
     "express": "^4.13.4",

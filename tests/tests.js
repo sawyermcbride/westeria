@@ -1,3 +1,0 @@
-describe('PubSub', function() {
-	
-})

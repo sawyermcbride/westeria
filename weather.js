@@ -13,7 +13,7 @@ let week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
 
 
 const toHours = function (t) {
-  return  new Date(t*1000).getHours();
+  return  new Date(t*10*100).getHours();
 }
 
 
