@@ -9,7 +9,7 @@ const https = require('https');
  * @param   {String}  url The url to pass into http.get()
  * @returns {Promise} A promise that resolves when the end event fires
  */
-module.exports.get = function (url) {
+module.exports.get = function ( url ) {
   let out = "";
   return new Promise( (resolve, reject) => {
     let req = https.get(url, (res) => {
@@ -18,7 +18,6 @@ module.exports.get = function (url) {
       });
       res.on('end', () => {
         resolve(out);
-
       });
     });
     req.end();
