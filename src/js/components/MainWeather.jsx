@@ -1,6 +1,7 @@
 import React from 'react'
 import Current from './Current'
 import Forecast from './Forecast';
+var k = "hello";
 
 const MainWeather = React.createClass({
 
@@ -16,7 +17,6 @@ const MainWeather = React.createClass({
                           weather={this.props.current}
                           format={this.props.format}
                         />
-              break;
               case 2: 
                 return <Forecast
                           windowWidth = {this.props.windowWidth}
@@ -24,10 +24,8 @@ const MainWeather = React.createClass({
                           days = {this.props.days} 
                           format={this.props.format}
                         />
-              break;
               case 3:
                 return <h1>Cool Visualization</h1>
-              break; 
             }
           })()
         }
@@ -35,5 +33,4 @@ const MainWeather = React.createClass({
     )
   }
 });
-
 export default MainWeather;

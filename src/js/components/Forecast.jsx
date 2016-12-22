@@ -50,7 +50,7 @@ const Forecast = React.createClass({
     }
     return (
          <div>
-            <h6>Hourly</h6>
+            <h6 className='center-text'>Hourly</h6>
             <HourTab switchHourTab = {this.switchHourTab} tab = {this.state.hourTab}/>
             <div className='hours-container'>
               {hourSections[parseInt(this.state.hourTab)]}

@@ -16,7 +16,6 @@ app.use( (req, res, next) => {
   console.log(req.url + '\n' + 'Connections: ' + ++num);
   next();
 });
-
 app.use('/w', weather);
 
 app.get('/l', (req, res) => {

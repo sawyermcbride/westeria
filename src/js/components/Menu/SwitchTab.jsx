@@ -4,8 +4,8 @@ import React from 'react';
 const SwitchTab = React.createClass({
 	toggleTab: function(e) {
 		let clicked = e.target.dataset.index;
-    this.props.triggerSwitchTab(clicked);
-    console.log(this.props);
+	    this.props.triggerSwitchTab(clicked);
+	    console.log(this.props);
 	},
 
 	render: function() {

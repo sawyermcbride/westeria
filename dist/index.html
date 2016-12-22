@@ -106,6 +106,7 @@
 
 /************************************/
     header {
+      
       display: flex;
       flex-wrap: nowrap;
       flex-direction: row;
@@ -169,7 +170,11 @@
     .current-container {
       text-align: center;
     }
-
+    
+    /*********************************************/
+    .center-text {
+        text-align: center;
+    }
     .current-container>.current-display {
       margin: 0 auto;
       width: 300px;
@@ -218,11 +223,6 @@
         background: rgba(65, 131, 215, .7);
         display: inline-block;
     }
-    @media (width < 600) {
-      .hours-container>.hour-node {
-          width: 80px;
-      }
-    } 
       
     
     .hours-container-tab-con ~ h6 {
@@ -251,8 +251,9 @@
 
     /******************************************************************/
     footer {
-      margin: 0 auto;
-      margin-top: 55px;
+      position:absolute;
+      top:85%;
+      width:100%;
       text-align: center;
     }
 
