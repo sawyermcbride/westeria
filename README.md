@@ -1,7 +1,6 @@
 # Westeria
 ## By Sawyer McBride
-This is a app built in Febuary of 2016, not really much purpose to it beyond just for fun. I wanted to build a weather app to try out react. The API documentation for the backend is just for me as a build the frontend. It's not a public API. If you want to make a pull request for something feel free to do so, if you want something to work on it would be how we could visualize the weather in a cool way. Maybe with svg/d3? or a cool canvas animation. If you see any bad practices raise an issue, i'm always looking to get better!
-
+API documentation listed below. Written in React/es6. The backend api is written by me in Node and with expressjs. Worked on mostly during fall of 2016. 
 
 ### api docs
 ##### Method in **BOLD**
