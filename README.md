@@ -1,6 +1,6 @@
 # Westeria
 ## By Sawyer McBride
-API documentation listed below. Written in React/es6. The backend api is written by me in Node and with expressjs. Worked on mostly during fall of 2016. 
+API documentation listed below. Written in React/es6. The backend api is written by me in Node and with expressjs. Worked on mostly during fall of 2017. 
 
 ### api docs
 ##### Method in **BOLD**
