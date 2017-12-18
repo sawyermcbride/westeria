@@ -1,6 +1,6 @@
 'use strict';
 const https = require('https');
-
+//westeria 
 /**
  * A promise wrapper for the http 'get' method
  * The function returns a promise that invokes the http.get() method
